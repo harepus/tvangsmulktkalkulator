@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Tvangsmulkt-kalkulator 2026 | Beregn boten fra Skatteetaten</title>
+<meta name="description" content="Beregn tvangsmulkt fra Skatteetaten for sen levering av mva-melding, skattemelding, a-melding og mer. Oppdatert med satser for 2026.">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://tvangsmulktkalkulator.no/">
+<meta property="og:title" content="Tvangsmulkt-kalkulator 2026">
+<meta property="og:description" content="Beregn hva sen levering til Skatteetaten koster deg per dag.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#FAFAF8;--card:#FFFFFF;--text:#1A1A1A;--muted:#6B6B6B;--border:#E8E6E1;--accent:#C4420A;--accent-bg:#FFF3ED;--accent-border:#FDDCCC;--green:#1B7D4B;--green-bg:#EEFBF3;--blue:#1D5BA0;--blue-bg:#EDF4FC}
+body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;-webkit-font-smoothing:antialiased}
+.wrap{max-width:620px;margin:0 auto;padding:2rem 1.25rem 4rem}
+header{margin-bottom:2rem}
+h1{font-size:1.75rem;font-weight:600;letter-spacing:-.02em;margin-bottom:.25rem}
+.tagline{color:var(--muted);font-size:.95rem}
+.calc-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:1.75rem;margin-bottom:2rem}
+label{display:block;font-size:.8rem;font-weight:500;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;margin-bottom:.4rem}
+select,input[type=number]{width:100%;padding:.65rem .75rem;font-size:1rem;font-family:inherit;border:1px solid var(--border);border-radius:10px;background:var(--bg);color:var(--text);appearance:none;-webkit-appearance:none;transition:border-color .15s}
+select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236B6B6B' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right .75rem center;padding-right:2.25rem;cursor:pointer}
+select:focus,input:focus{outline:none;border-color:var(--accent)}
+.field{margin-bottom:1.25rem}
+.field:last-child{margin-bottom:0}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:.75rem}
+.emp-field{display:none}
+.emp-field.show{display:block}
+
+.result{background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden;margin-bottom:2rem}
+.result-body{padding:1.5rem 1.75rem}
+.result-line{display:flex;justify-content:space-between;align-items:baseline;padding:.4rem 0;font-size:.9rem}
+.result-line .label{color:var(--muted)}
+.result-line .val{font-weight:500}
+.divider{height:1px;background:var(--border);margin:.5rem 0}
+.result-total{background:var(--accent-bg);border-top:1px solid var(--accent-border);padding:1.25rem 1.75rem;display:flex;justify-content:space-between;align-items:baseline}
+.result-total .label{font-size:.9rem;color:var(--accent);font-weight:500}
+.result-total .val{font-size:1.6rem;font-weight:600;color:var(--accent);letter-spacing:-.02em}
+.max-badge{display:inline-block;font-size:.75rem;color:var(--accent);background:var(--accent-bg);border:1px solid var(--accent-border);border-radius:6px;padding:.15rem .5rem;margin-top:.5rem}
+
+.info-section{margin-bottom:2.5rem}
+.info-section h2{font-size:1.1rem;font-weight:600;margin-bottom:.75rem}
+.info-section p{color:var(--muted);font-size:.9rem;line-height:1.7;margin-bottom:.75rem}
+.info-section a{color:var(--blue);text-decoration:none;border-bottom:1px solid transparent}
+.info-section a:hover{border-bottom-color:var(--blue)}
+
+.frister{display:grid;grid-template-columns:1fr 1fr;gap:.5rem;margin:.75rem 0}
+.frist{background:var(--blue-bg);border-radius:10px;padding:.65rem .85rem}
+.frist .dato{font-size:.85rem;font-weight:600;color:var(--blue)}
+.frist .hva{font-size:.75rem;color:var(--muted);margin-top:.1rem}
+
+.tip{background:var(--green-bg);border-radius:12px;padding:1.25rem 1.5rem;margin-bottom:2rem}
+.tip-title{font-size:.85rem;font-weight:600;color:var(--green);margin-bottom:.35rem}
+.tip p{font-size:.85rem;color:var(--muted);line-height:1.6}
+
+footer{border-top:1px solid var(--border);padding-top:1.5rem;font-size:.8rem;color:var(--muted);line-height:1.7}
+footer a{color:var(--muted);text-decoration:underline}
+
+@media(max-width:480px){
+  .wrap{padding:1.5rem 1rem 3rem}
+  h1{font-size:1.4rem}
+  .row{grid-template-columns:1fr}
+  .frister{grid-template-columns:1fr}
+  .calc-card{padding:1.25rem}
+  .result-body{padding:1.25rem}
+  .result-total{padding:1rem 1.25rem}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Tvangsmulkt-kalkulator</h1>
+    <p class="tagline">Beregn hva sen levering til Skatteetaten koster deg — oppdatert 2026</p>
+  </header>
+
+  <div class="calc-card">
+    <div class="field">
+      <label for="type">Hva har du ikke levert?</label>
+      <select id="type">
+        <option value="mva">Mva-melding</option>
+        <option value="skatt">Skattemelding for næringsdrivende</option>
+        <option value="amelding">A-melding (lønnsrapportering)</option>
+        <option value="aksjonaer">Aksjonærregisteroppgave</option>
+        <option value="avgift">Særavgiftsmelding</option>
+        <option value="tredjepart">Tredjepartsopplysninger</option>
+        <option value="otp">OTP – obligatorisk tjenestepensjon</option>
+        <option value="bokforing">Bokføringspålegg</option>
+      </select>
+    </div>
+    <div class="row">
+      <div class="field">
+        <label for="days">Antall dager forsinket</label>
+        <input type="number" id="days" min="1" max="999" value="7" inputmode="numeric">
+      </div>
+      <div class="field emp-field" id="emp-wrap">
+        <label for="emp" id="emp-label">Antall ansatte</label>
+        <input type="number" id="emp" min="1" max="9999" value="1" inputmode="numeric">
+      </div>
+    </div>
+  </div>
+
+  <div class="result">
+    <div class="result-body">
+      <div class="result-line">
+        <span class="label">Rettsgebyr 2026</span>
+        <span class="val">1 345 kr</span>
+      </div>
+      <div class="result-line">
+        <span class="label">Dagssats</span>
+        <span class="val" id="o-rate">672,50 kr</span>
+      </div>
+      <div class="divider"></div>
+      <div class="result-line">
+        <span class="label" id="o-days">7 dager</span>
+        <span class="val" id="o-sub">4 708 kr</span>
+      </div>
+      <div id="max-row" style="text-align:right;padding-top:2px">
+        <span class="max-badge" id="o-max">Maks: 67 250 kr</span>
+      </div>
+    </div>
+    <div class="result-total">
+      <span class="label">Du må betale</span>
+      <span class="val" id="o-total">4 708 kr</span>
+    </div>
+  </div>
+
+  <div class="tip">
+    <div class="tip-title">Slik unngår du tvangsmulkt</div>
+    <p>Bruk et regnskapsprogram som varsler deg før fristene. Fiken, Tripletex og Visma eAccounting sender automatiske påminnelser for mva, skattemelding og a-melding.</p>
+  </div>
+
+  <div class="info-section">
+    <h2>Hva er tvangsmulkt?</h2>
+    <p>Tvangsmulkt er en daglig bot Skatteetaten ilegger bedrifter som ikke leverer pliktige oppgaver innen fristen. Boten løper hver dag til du leverer, eller til du treffer maksgrensen.</p>
+    <p>I 2026 er rettsgebyret 1 345 kr. De fleste meldinger har en dagssats på et halvt rettsgebyr (672,50 kr/dag), men a-meldingen beregnes per ansatt og bokføringspålegg har høyere sats.</p>
+  </div>
+
+  <div class="info-section">
+    <h2>Viktige frister</h2>
+    <div class="frister">
+      <div class="frist"><div class="dato">5. hver måned</div><div class="hva">A-melding</div></div>
+      <div class="frist"><div class="dato">10. i oddetallsmnd.</div><div class="hva">Mva-melding (tomånedlig)</div></div>
+      <div class="frist"><div class="dato">30. april / 31. mai</div><div class="hva">Skattemelding</div></div>
+      <div class="frist"><div class="dato">31. juli</div><div class="hva">Årsregnskap</div></div>
+    </div>
+  </div>
+
+  <div class="info-section">
+    <h2>Kan du klage?</h2>
+    <p>Ja. Du har rett til å klage på vedtaket om tvangsmulkt. Klagefristen er seks uker. Du må betale mens klagen behandles. Klage sendes via <a href="https://info.altinn.no/skjemaoversikt/skatteetaten/klage-pa-vedtak-om-tvangsmulkt-og-overtredelsesgebyr-rapportert-med-organisasjonsnummer/" target="_blank" rel="noopener">Altinn (RF-1364)</a>.</p>
+    <p>Tvangsmulkten kan frafalles hvis du kan vise at det var umulig å levere på grunn av forhold utenfor din kontroll.</p>
+  </div>
+
+  <footer>
+    <p>Satser hentet fra <a href="https://www.skatteetaten.no/en/business-and-organisation/start-and-run/deadlines-certificates-and-accounting/enforcement-fines/" target="_blank" rel="noopener">Skatteetaten</a>. Kalkulatoren gir et estimat — kontakt Skatteetaten for eksakt beregning. Sist oppdatert april 2026.</p>
+  </footer>
+</div>
+
+<script>
+var R=1345,T={
+mva:{r:R*.5,m:R*50,e:0},
+skatt:{r:R*.5,m:R*50,e:0},
+amelding:{r:R*.1,m:R*1000,e:1,el:"Ansatte med feil/mangler"},
+aksjonaer:{r:R*.5,m:R*20,e:0},
+avgift:{r:R*.5,m:R*50,e:0},
+tredjepart:{r:R*.5,m:R*50,e:0},
+otp:{r:250,m:1/0,e:1,el:"Ansatte uten OTP"},
+bokforing:{r:R*1,m:1e6,e:0}
+};
+function f(n){return Math.round(n).toLocaleString("nb-NO")+" kr"}
+function c(){
+var t=T[document.getElementById("type").value],
+d=Math.max(1,parseInt(document.getElementById("days").value)||1),
+n=t.e?Math.max(1,parseInt(document.getElementById("emp").value)||1):1,
+w=document.getElementById("emp-wrap"),
+daily=t.r*n,raw=daily*d,cap=Math.min(raw,t.m);
+w.className=t.e?"field emp-field show":"field emp-field";
+if(t.e)document.getElementById("emp-label").textContent=t.el;
+var rs=Math.round(t.r*100)/100;
+document.getElementById("o-rate").textContent=t.e?rs.toLocaleString("nb-NO")+" kr x "+n+" = "+f(daily)+"/dag":rs.toLocaleString("nb-NO")+" kr/dag";
+document.getElementById("o-days").textContent=d+(d===1?" dag":" dager");
+document.getElementById("o-sub").textContent=f(raw);
+document.getElementById("o-total").textContent=f(cap);
+var mr=document.getElementById("max-row");
+if(t.m===1/0){mr.innerHTML='<span class="max-badge">Ingen oppgitt maks for OTP</span>'}
+else if(raw>t.m){mr.innerHTML='<span class="max-badge">Begrenset til maks: '+f(t.m)+'</span>'}
+else{mr.innerHTML='<span class="max-badge">Maks: '+f(t.m)+'</span>'}
+}
+document.getElementById("type").onchange=c;
+document.getElementById("days").oninput=c;
+document.getElementById("emp").oninput=c;
+c();
+</script>
+</body>
+</html>
