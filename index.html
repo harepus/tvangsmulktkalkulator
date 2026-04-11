@@ -104,7 +104,8 @@
 </script>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-:root{--bg:#FAFAF8;--card:#FFFFFF;--text:#1A1A1A;--muted:#595959;--border:#E8E6E1;--accent:#C4420A;--accent-bg:#FFF3ED;--accent-border:#FDDCCC;--green:#1B7D4B;--green-bg:#EEFBF3;--blue:#1D5BA0;--blue-bg:#EDF4FC}
+*:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+:root{--bg:#FAFAF8;--card:#FFFFFF;--text:#1A1A1A;--muted:#454545;--border:#E8E6E1;--accent:#C4420A;--accent-bg:#FFF3ED;--accent-border:#FDDCCC;--green:#1B7D4B;--green-bg:#EEFBF3;--blue:#1D5BA0;--blue-bg:#EDF4FC}
 body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;-webkit-font-smoothing:antialiased}
 .wrap{max-width:620px;margin:0 auto;padding:2rem 1.25rem 4rem}
 header{margin-bottom:2rem}
@@ -113,10 +114,10 @@ h1{font-size:1.75rem;font-weight:600;letter-spacing:-.02em;margin-bottom:.25rem}
 .hint{color:var(--muted);font-size:.85rem;margin-top:.2rem}
 .hint.hidden{display:none}
 .calc-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:1.75rem;margin-bottom:2rem}
-label{display:block;font-size:.8rem;font-weight:500;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;margin-bottom:.4rem}
+label{display:block;font-size:.875rem;font-weight:500;color:var(--text);margin-bottom:.4rem}
 select,input[type=number]{width:100%;padding:.65rem .75rem;font-size:1rem;font-family:inherit;border:1px solid var(--border);border-radius:10px;background:var(--bg);color:var(--text);appearance:none;-webkit-appearance:none;transition:border-color .15s}
 select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236B6B6B' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right .75rem center;padding-right:2.25rem;cursor:pointer}
-select:focus,input:focus{outline:2px solid var(--accent);outline-offset:2px;border-color:var(--accent)}
+select:focus-visible,input:focus-visible{border-color:var(--accent)}
 .field{margin-bottom:1.25rem}
 .field:last-child{margin-bottom:0}
 .field-desc{font-size:.8rem;color:var(--muted);margin-top:.35rem;line-height:1.5}
@@ -139,18 +140,20 @@ select:focus,input:focus{outline:2px solid var(--accent);outline-offset:2px;bord
 .result-total.flash{animation:flash .45s ease-out}
 .max-badge{display:inline-block;font-size:.75rem;color:var(--accent);background:var(--accent-bg);border:1px solid var(--accent-border);border-radius:6px;padding:.15rem .5rem;margin-top:.5rem}
 
-.info-section{margin-bottom:2.5rem}
+.info-section{margin-bottom:1.25rem;background:var(--card);border:1px solid var(--border);border-radius:16px;padding:1.5rem 1.75rem}
 .info-section h2{font-size:1.1rem;font-weight:600;margin-bottom:.75rem}
 .info-section p{color:var(--muted);font-size:.9rem;line-height:1.7;margin-bottom:.75rem}
+.info-section p:last-child{margin-bottom:0}
 .info-section a{color:var(--blue);text-decoration:none;border-bottom:1px solid transparent}
 .info-section a:hover{border-bottom-color:var(--blue)}
+.faq-section{background:transparent;border:none;border-radius:0;padding:0;margin-bottom:2.5rem}
 
 .frister{display:grid;grid-template-columns:1fr 1fr;gap:.5rem;margin:.75rem 0}
 .frist{background:var(--blue-bg);border-radius:10px;padding:.65rem .85rem}
 .frist .dato{font-size:.85rem;font-weight:600;color:var(--blue)}
 .frist .hva{font-size:.75rem;color:var(--muted);margin-top:.1rem}
 
-.tip{background:var(--green-bg);border-radius:12px;padding:1.25rem 1.5rem;margin-bottom:2rem}
+.tip{background:var(--green-bg);border:1px solid #A8D5BC;border-left:4px solid var(--green);border-radius:12px;padding:1.25rem 1.5rem;margin-bottom:2rem}
 .tip-title{font-size:.85rem;font-weight:600;color:var(--green);margin-bottom:.35rem}
 .tip p{font-size:.85rem;color:var(--muted);line-height:1.6}
 .tip a{color:var(--green);text-decoration:underline}
@@ -183,6 +186,7 @@ footer a{color:var(--muted);text-decoration:underline}
   .row{grid-template-columns:1fr}
   .frister{grid-template-columns:1fr}
   .calc-card{padding:1.25rem}
+  .info-section{padding:1.25rem}
   .result-body{padding:1.25rem}
   .result-total{padding:1rem 1.25rem}
 }
@@ -216,11 +220,13 @@ footer a{color:var(--muted);text-decoration:underline}
       <div class="field">
         <label for="days">Antall dager forsinket</label>
         <input type="number" id="days" min="1" max="999" value="7" inputmode="numeric">
+        <p class="field-desc">Antall dager siden fristen gikk ut</p>
         <span class="field-error" id="days-error">Minimum 1 dag</span>
       </div>
       <div class="field emp-field" id="emp-wrap">
         <label for="emp" id="emp-label">Antall ansatte</label>
         <input type="number" id="emp" min="1" max="9999" value="1" inputmode="numeric">
+        <p class="field-desc" id="emp-desc"></p>
         <span class="field-error" id="emp-error">Minimum 1</span>
       </div>
     </div>
@@ -356,11 +362,11 @@ var DESC = {
 var T = {
   mva:       {r:R*.5,    m:R*50,    e:0},
   skatt:     {r:R*.5,    m:R*50,    e:0},
-  amelding:  {r:R*.1,    m:R*1000,  e:1, el:'Ansatte med feil/mangler'},
+  amelding:  {r:R*.1,    m:R*1000,  e:1, el:'Ansatte med feil/mangler', ed:'A-melding beregnes per ansatt med feil eller mangler i rapporten.'},
   aksjonaer: {r:R*.5,    m:R*20,    e:0},
   avgift:    {r:R*.5,    m:R*50,    e:0},
   tredjepart:{r:R*.5,    m:R*50,    e:0},
-  otp:       {r:250,     m:Infinity,e:1, el:'Ansatte uten OTP'},
+  otp:       {r:250,     m:Infinity,e:1, el:'Ansatte uten OTP',         ed:'OTP-boten l\u00f8per per ansatt som mangler pensjonsordning.'},
   bokforing: {r:R*1,     m:1000000, e:0}
 };
 function f(n){return Math.round(n).toLocaleString('nb-NO')+' kr'}
@@ -391,7 +397,10 @@ function c() {
   var n = t.e ? Math.max(1, empRaw) : 1;
   var w = document.getElementById('emp-wrap');
   w.className = t.e ? 'field emp-field show' : 'field emp-field';
-  if (t.e) document.getElementById('emp-label').textContent = t.el;
+  if (t.e) {
+    document.getElementById('emp-label').textContent = t.el;
+    document.getElementById('emp-desc').textContent = t.ed || '';
+  }
   document.getElementById('type-desc').textContent = DESC[typeKey] || '';
   var daily = t.r * n;
   var raw = daily * d;
