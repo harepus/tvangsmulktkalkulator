@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <!-- Concept B: Hexagon monogram — rødt, T for Tvangsmulkt -->
+  <polygon points="32,3 61,19 61,45 32,61 3,45 3,19" fill="#C0392B"/>
+  <text x="32" y="46" text-anchor="middle"
+        font-family="-apple-system, BlinkMacSystemFont, Arial, sans-serif"
+        font-size="32" font-weight="900" fill="#ffffff">T</text>
+</svg>

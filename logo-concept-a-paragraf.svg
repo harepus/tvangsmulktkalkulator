@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <!-- Concept A: Paragraftegn — navy + gull -->
+  <!-- Bruk: mørk bakgrunn, juridisk/skattemessig kontekst -->
+  <rect width="64" height="64" rx="14" fill="#0F2D6B"/>
+  <text x="32" y="47" text-anchor="middle"
+        font-family="-apple-system, Georgia, serif"
+        font-size="40" font-weight="700" fill="#FFD166">§</text>
+</svg>
