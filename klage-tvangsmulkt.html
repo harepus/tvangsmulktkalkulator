@@ -187,9 +187,9 @@ a:hover{border-bottom-color:var(--blue)}
 .intro{font-size:1.05rem;color:var(--text);line-height:1.7;margin-bottom:1.5rem}
 .card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:1.5rem 1.75rem;margin-bottom:1.25rem}
 .steps{list-style:none;padding:0;counter-reset:steps}
-.steps li{counter-increment:steps;display:grid;grid-template-columns:2rem 1fr;gap:.75rem;padding:1.25rem 0;border-bottom:1px solid var(--border)}
-.steps li:last-child{border-bottom:none;padding-bottom:0}
-.steps li::before{content:counter(steps);display:flex;align-items:center;justify-content:center;width:1.75rem;height:1.75rem;background:var(--accent);color:#fff;border-radius:50%;font-size:.8rem;font-weight:600;flex-shrink:0;margin-top:.1rem}
+.steps>li{counter-increment:steps;display:grid;grid-template-columns:2rem 1fr;gap:.75rem;padding:1.25rem 0;border-bottom:1px solid var(--border)}
+.steps>li:last-child{border-bottom:none;padding-bottom:0}
+.steps>li::before{content:counter(steps);display:flex;align-items:center;justify-content:center;width:1.75rem;height:1.75rem;background:var(--accent);color:#fff;border-radius:50%;font-size:.8rem;font-weight:600;flex-shrink:0;margin-top:.1rem}
 .step-body h3{margin:0 0 .35rem;font-size:.95rem;font-weight:600;color:var(--text)}
 .step-body p{margin:0;font-size:.9rem}
 table{width:100%;border-collapse:collapse;font-size:.88rem;margin:.75rem 0 1rem}
