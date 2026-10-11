@@ -4,19 +4,20 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project overview
 
-A single-file Norwegian tax penalty calculator (`index.html`) for "tvangsmulkt" — daily fines levied by Skatteetaten (Norwegian Tax Administration) for late filing of mandatory reports. No build system, no dependencies, no package manager.
+A small static Norwegian tax penalty calculator site (`index.html` plus article pages) for "tvangsmulkt" — daily fines levied by Skatteetaten (Norwegian Tax Administration) for late filing of mandatory reports. No build system, no dependencies, no package manager.
 
 ## Development
 
-Open `index.html` directly in a browser — no server required. All logic, styles, and markup live in the one file.
+Open `index.html` directly in a browser, or run `python3 -m http.server` for root-relative links to work. Deployed on Cloudflare Pages (push to `main` deploys).
 
 ## Architecture
 
-Everything is in `index.html`:
-
-- **CSS** (inline `<style>`): CSS custom properties for the color palette (`--bg`, `--accent`, etc.), responsive grid layout, card/result components.
-- **HTML**: Calculator form (report type selector + days/employees inputs), result display card, informational sections (deadlines, appeal info), footer.
-- **JS** (inline `<script>`): Rate table `T` keyed by report type, each entry with daily rate `r`, max cap `m`, and whether an employee-count multiplier applies `e`. The `c()` function recalculates on every input change and updates the DOM directly.
+- **`styles.css`**: shared by every page. Palette tokens (`--paper`, `--ink`, `--stamp`, ...), Schibsted Grotesk, site header/nav, article components (`.card` tables, `.tip`, `.warn`, `.steps`, `.related`), and calculator components (`.box` fields, `.seg` ENK/AS switch, `.slip` result with meter).
+- **`index.html`**: calculator. JS has the rate table `T` (daily rate `r`, cap `m`, employee multiplier `e`), `DESC`/`WHO` help texts (WHO is per business type: `enk`/`as`), and `c()` which recalculates on every input.
+- **Articles**: `tvangsmulkt-guide.html`, `klage-tvangsmulkt.html`, `frister-2026.html`, `rettsgebyr-2026.html`. The site header/nav and footer links are duplicated in each page; update all of them when adding a page (and `sitemap.xml`).
+- **`frister-2026.html`**: deadline cells carry `data-due="YYYY-MM-DD"` (the effective date after weekend moves); a small script adds "passert"/"neste frist" badges, so nothing needs hand-updating during the year.
+- **`404.html`**: makes Cloudflare Pages return real 404s instead of serving the homepage for unknown URLs.
+- **`og-image.png`, `apple-touch-icon.png`**: rendered from HTML with Playwright; `favicon.svg` is the source mark.
 
 ## Rate table structure
 
@@ -31,7 +32,7 @@ var T = {
 };
 ```
 
-When updating rates for a new year, change `R` and adjust per-type overrides as needed. The `rettsgebyr` value is set annually by the Norwegian government.
+When updating rates for a new year, change `R` in `index.html`, the hardcoded amounts in the article pages and `rettsgebyr-2026.html`, the `data-due` dates in `frister-2026.html`, and adjust per-type overrides as needed. The `rettsgebyr` value is set annually by the Norwegian government.
 
 ## Locale
 
